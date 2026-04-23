@@ -56,7 +56,10 @@ object DiffData extends BasePartitionJob {
         }))
       })
       
-      ma.value.printMetrics(runId, trackRunFeature);
+      targetConnection.withSessionDo(targetSession => {
+        val trackRun = new TrackRun(targetSession, keyspaceTableValue)
+        ma.value.printMetrics(runId, trackRun)
+      })
     }
   }
   
